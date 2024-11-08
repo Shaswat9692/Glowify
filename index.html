@@ -1,0 +1,33 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Editing Website</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Photo Editing Tool</h1>
+    </header>
+    <main>
+        <div class="upload-section">
+            <input type="file" id="upload" accept="image/*">
+            <button onclick="uploadImage()">Upload Photo</button>
+        </div>
+        <div class="editor">
+            <canvas id="canvas"></canvas>
+            <div class="tools">
+                <button onclick="applyGlow()">Glow</button>
+                <button onclick="applyFilter('grayscale')">Grayscale</button>
+                <button onclick="applyFilter('sepia')">Sepia</button>
+                <button onclick="cropImage()">Crop</button>
+                <button onclick="rotateImage()">Rotate</button>
+                <button onclick="createCollage()">Create Collage</button>
+            </div>
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
