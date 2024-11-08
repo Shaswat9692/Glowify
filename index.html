@@ -1,32 +1,50 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Photo Editing Website</title>
+    <title>Glowify Photo Editor</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1>Photo Editing Tool</h1>
+        <h1>Glowify - Edit Your Photos</h1>
     </header>
     <main>
-        <div class="upload-section">
-            <input type="file" id="upload" accept="image/*">
-            <button onclick="uploadImage()">Upload Photo</button>
-        </div>
-        <div class="editor">
-            <canvas id="canvas"></canvas>
-            <div class="tools">
-                <button onclick="applyGlow()">Glow</button>
+        <div>
+            <input type="file" id="uploadImage" onchange="loadImage(event)">
+            <button id="addFilterBtn">Add Filter</button>
+            <div id="filterOptions" style="display:none;">
                 <button onclick="applyFilter('grayscale')">Grayscale</button>
                 <button onclick="applyFilter('sepia')">Sepia</button>
-                <button onclick="cropImage()">Crop</button>
-                <button onclick="rotateImage()">Rotate</button>
-                <button onclick="createCollage()">Create Collage</button>
+                <button onclick="applyFilter('invert')">Invert</button>
+                <button onclick="applyFilter('brightness')">Brightness</button>
+                <button onclick="applyFilter('contrast')">Contrast</button>
+                <button onclick="applyFilter('saturate')">Saturate</button>
+                <button onclick="applyFilter('hue-rotate')">Hue Rotate</button>
+                <button onclick="applyFilter('blur')">Blur</button>
+                <button onclick="applyFilter('opacity')">Opacity</button>
+                <button onclick="applyFilter('drop-shadow')">Drop Shadow</button>
+                <button onclick="applyFilter('warm')">Warm</button>
+                <button onclick="applyFilter('cold')">Cold</button>
+                <button onclick="applyFilter('vibrance')">Vibrance</button>
+                <button onclick="applyFilter('moonlight')">Moonlight</button>
+                <button onclick="applyFilter('soften')">Soften</button>
+                <button onclick="applyFilter('sharpen')">Sharpen</button>
+                <button onclick="applyFilter('lighten')">Lighten</button>
+                <button onclick="applyFilter('darken')">Darken</button>
+                <button onclick="applyFilter('antique')">Antique</button>
+                <button onclick="applyFilter('vintage')">Vintage</button>
+                <button onclick="applyFilter('highlights')">Highlights</button>
             </div>
+            <div id="sliderContainer" style="display:none;">
+                <input type="range" id="filterSlider" min="-100" max="100" value="0" oninput="adjustFilter()">
+                <label for="filterSlider">Intensity: <span id="filterValue">0%</span></label> <!-- Display filter percentage -->
+            </div>
+            <button id="cropBtn" onclick="cropImage()">Crop</button>
+            <button id="saveBtn" onclick="saveImage()" style="display:none;">Save Image</button>
         </div>
+        <canvas id="canvas"></canvas>
     </main>
     <script src="script.js"></script>
 </body>
