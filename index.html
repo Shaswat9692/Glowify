@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Glowify Photo Editor</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.css">
 </head>
 <body>
     <header>
@@ -13,8 +14,8 @@
     <main>
         <div>
             <input type="file" id="uploadImage" onchange="loadImage(event)">
-            <button id="addFilterBtn">Add Filter</button>
-            <div id="filterOptions" style="display:none;">
+            <button id="addFilterBtn" onclick="toggleFilterOptions()">Add Filter</button>
+            <div id="filterOptions" style="display: none;">
                 <button onclick="applyFilter('grayscale')">Grayscale</button>
                 <button onclick="applyFilter('sepia')">Sepia</button>
                 <button onclick="applyFilter('invert')">Invert</button>
@@ -37,15 +38,16 @@
                 <button onclick="applyFilter('vintage')">Vintage</button>
                 <button onclick="applyFilter('highlights')">Highlights</button>
             </div>
-            <div id="sliderContainer" style="display:none;">
+            <div id="sliderContainer" style="display: none;">
                 <input type="range" id="filterSlider" min="-100" max="100" value="0" oninput="adjustFilter()">
                 <label for="filterSlider">Intensity: <span id="filterValue">0%</span></label> <!-- Display filter percentage -->
             </div>
-            <button id="cropBtn" onclick="cropImage()">Crop</button>
-            <button id="saveBtn" onclick="saveImage()" style="display:none;">Save Image</button>
+            <button id="cropBtn" onclick="activateCrop()">Crop</button>
+            <button id="saveBtn" onclick="saveImage()" style="display: none;">Save Image</button>
         </div>
         <canvas id="canvas"></canvas>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
