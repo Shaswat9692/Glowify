@@ -3,15 +3,16 @@ const ctx = canvas.getContext('2d');
 let originalImage = null;
 let currentFilter = '';
 let cropper = null;
+let zoomLevel = 0.5;  // Initial zoom level
 
 function loadImage(event) {
     const image = new Image();
     image.src = URL.createObjectURL(event.target.files[0]);
     image.onload = function () {
         originalImage = image;
-        canvas.width = image.width;
-        canvas.height = image.height;
-        ctx.drawImage(image, 0, 0);
+        canvas.width = image.width * zoomLevel;
+        canvas.height = image.height * zoomLevel;
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
         document.getElementById('saveBtn').style.display = 'none';
     };
 }
@@ -24,7 +25,7 @@ function toggleFilterOptions() {
 function resetImage() {
     if (originalImage) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(originalImage, 0, 0);
+        ctx.drawImage(originalImage, 0, 0, canvas.width, canvas.height);
     }
 }
 
@@ -107,5 +108,5 @@ function saveImage() {
     const link = document.createElement('a');
     link.download = 'edited_image.png';
     link.href = canvas.toDataURL();
-    link.click();
+    link.click();
 }
