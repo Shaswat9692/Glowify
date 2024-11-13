@@ -93,11 +93,18 @@ function saveImage() {
         const dataURL = croppedCanvas.toDataURL('image/png');
         const link = document.createElement('a');
         link.href = dataURL;
-        link.download = 'edited-image.png';
+        link.download = 'edited-pic-by-glorify.png';  // Set the default filename here
         link.click();
         cropper.destroy();
         cropper = null;
         document.getElementById('saveBtn').style.display = 'none';
+    } else {
+        // If no cropper is active, save the edited image from the canvas
+        const dataURL = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.href = dataURL;
+        link.download = 'edited-pic-by-glorify.png';  // Set the default filename here
+        link.click();
     }
 }
 
