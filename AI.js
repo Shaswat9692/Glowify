@@ -15,21 +15,26 @@ document.getElementById('image-input').addEventListener('change', (event) => {
         img.onload = function () {
             // Ensure the container matches the image aspect ratio
             const container = document.querySelector('.comparison-container');
-            container.style.width = `${img.width}px`;
-            container.style.height = `${img.height}px`;
+            const scale = 0.5; // Image scaling factor (50% of the original size)
 
-            // Set canvas sizes to match image
-            originalCanvas.width = enhancedCanvas.width = img.width;
-            originalCanvas.height = enhancedCanvas.height = img.height;
+            const newWidth = img.width * scale;
+            const newHeight = img.height * scale;
+
+            container.style.width = `${newWidth}px`;
+            container.style.height = `${newHeight}px`;
+
+            // Set canvas sizes to match the scaled image
+            originalCanvas.width = enhancedCanvas.width = newWidth;
+            originalCanvas.height = enhancedCanvas.height = newHeight;
 
             // Draw original image
-            originalCtx.clearRect(0, 0, img.width, img.height);
-            originalCtx.drawImage(img, 0, 0);
+            originalCtx.clearRect(0, 0, newWidth, newHeight);
+            originalCtx.drawImage(img, 0, 0, newWidth, newHeight);
             
             // Simulate enhancement by slightly adjusting brightness for demonstration
             enhancedCtx.filter = 'brightness(1.2)';
-            enhancedCtx.clearRect(0, 0, img.width, img.height);
-            enhancedCtx.drawImage(img, 0, 0);
+            enhancedCtx.clearRect(0, 0, newWidth, newHeight);
+            enhancedCtx.drawImage(img, 0, 0, newWidth, newHeight);
 
             // Make the download button visible after the image is loaded
             downloadBtn.style.display = 'block';

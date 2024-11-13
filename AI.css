@@ -5,15 +5,18 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-color: #f0f0f0;
+    background-color: #121212; /* Changed to dark background */
+    color: white;
 }
 
 .container {
     text-align: center;
-    background: white;
+    background: #1f1f1f; /* Darker container background */
     padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     border-radius: 8px;
+    width: 90%; /* To prevent image from taking up full page */
+    max-width: 800px; /* Limit the max width */
 }
 
 h1 {
@@ -23,7 +26,7 @@ h1 {
 .comparison-container {
     position: relative;
     overflow: hidden;
-    border: 2px solid #ccc;
+    border: 2px solid #28a745; /* Green border */
     margin: 20px auto;
 }
 
