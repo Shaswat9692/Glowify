@@ -6,14 +6,17 @@ let cropper = null;
 
 function loadImage(event) {
     const image = new Image();
-    image.src = URL.createObjectURL(event.target.files[0]);
     image.onload = function () {
         originalImage = image;
         canvas.width = image.width;
         canvas.height = image.height;
         ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
         document.getElementById('saveBtn').style.display = 'none';
+        // Show the Add Filter and Crop buttons
+        document.getElementById('addFilterBtn').style.display = 'inline-block';
+        document.getElementById('cropBtn').style.display = 'inline-block';
     };
+    image.src = URL.createObjectURL(event.target.files[0]);
 }
 
 function toggleFilterOptions() {
@@ -95,3 +98,6 @@ function saveImage() {
     }
 }
 
+function goToCollagePage() {
+    window.location.href = 'collage/collage.html';
+}

@@ -1,106 +1,72 @@
 let images = [];
-let currentLayout = "1:1";
+let collageLayout = '2x1';
 
-// Toggle collage options
-function toggleCollageOptions() {
-    const options = document.getElementById("collageOptions");
-    options.style.display = options.style.display === "none" ? "block" : "none";
-}
-
-// Load images
 function loadImages(event) {
     const files = event.target.files;
-    const collageContainer = document.getElementById("collageContainer");
-
-    collageContainer.innerHTML = ""; // Clear any existing images
-
-    for (let file of files) {
-        const img = document.createElement("img");
-        img.src = URL.createObjectURL(file);
-        img.className = "collage-image";
-        
-        // Add drag and drop events
-        img.draggable = true;
-        img.ondragstart = (e) => dragStart(e);
-        img.ondragend = (e) => dragEnd(e);
-
-        collageContainer.appendChild(img);
-        images.push(img);
-    }
+    images = Array.from(files);
+    renderCollage();
 }
 
-// Set collage grid layout
+function toggleCollageOptions() {
+    const collageOptions = document.getElementById("collageOptions");
+    collageOptions.style.display = collageOptions.style.display === "none" ? "block" : "none";
+}
+
 function setCollageGrid(layout) {
-    const collageContainer = document.getElementById("collageContainer");
-    currentLayout = layout;
-
-    switch (layout) {
-        case "1:1":
-            collageContainer.style.width = "400px";
-            collageContainer.style.height = "400px";
-            break;
-        case "4:3":
-            collageContainer.style.width = "533px";
-            collageContainer.style.height = "400px";
-            break;
-        case "3:4":
-            collageContainer.style.width = "300px";
-            collageContainer.style.height = "400px";
-            break;
-        case "851x315":
-            collageContainer.style.width = "851px";
-            collageContainer.style.height = "315px";
-            break;
-    }
+    collageLayout = layout;
+    renderCollage();
 }
 
-// Add grid lines for guidance
-function addGridLines() {
+function renderCollage() {
     const collageContainer = document.getElementById("collageContainer");
-    collageContainer.querySelectorAll(".grid-line").forEach(line => line.remove()); // Remove old grid lines
+    collageContainer.innerHTML = ""; // Clear previous images
     
-    const gridSize = currentLayout === "851x315" ? 6 : 4;
-    for (let i = 1; i < gridSize; i++) {
-        // Horizontal line
-        const hLine = document.createElement("div");
-        hLine.className = "grid-line";
-        hLine.style.top = `${(100 / gridSize) * i}%`;
-        hLine.style.height = "1px";
-        hLine.style.width = "100%";
-        collageContainer.appendChild(hLine);
-        
-        // Vertical line
-        const vLine = document.createElement("div");
-        vLine.className = "grid-line";
-        vLine.style.left = `${(100 / gridSize) * i}%`;
-        vLine.style.width = "1px";
-        vLine.style.height = "100%";
-        collageContainer.appendChild(vLine);
-    }
-}
+    collageContainer.className = "collage-container " + collageLayout; // Set layout class based on choice
 
-// Drag and drop functionality
-let draggedImage = null;
+    images.forEach((file, index) => {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const img = document.createElement("img");
+            img.src = e.target.result;
+            img.classList.add("collage-image");
+            img.setAttribute("draggable", "true");
+            img.setAttribute("data-index", index);
+
+            // Add drag event listeners
+            img.addEventListener("dragstart", dragStart);
+            img.addEventListener("dragover", dragOver);
+            img.addEventListener("drop", drop);
+
+            collageContainer.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+    });
+}
 
 function dragStart(event) {
-    draggedImage = event.target;
-    setTimeout(() => event.target.style.opacity = "0.5", 0);
+    event.dataTransfer.setData("text/plain", event.target.dataset.index);
 }
 
-function dragEnd(event) {
-    setTimeout(() => {
-        draggedImage.style.opacity = "1";
-        draggedImage = null;
-    }, 0);
+function dragOver(event) {
+    event.preventDefault();
 }
 
-// Save collage as an image
+function drop(event) {
+    event.preventDefault();
+    const draggedIndex = event.dataTransfer.getData("text");
+    const targetIndex = event.target.dataset.index;
+
+    if (draggedIndex !== targetIndex) {
+        [images[draggedIndex], images[targetIndex]] = [images[targetIndex], images[draggedIndex]];
+        renderCollage();
+    }
+}
+
 function saveCollage() {
-    const collageContainer = document.getElementById("collageContainer");
-    html2canvas(collageContainer).then(canvas => {
+    html2canvas(document.getElementById("collageContainer")).then((canvas) => {
         const link = document.createElement("a");
-        link.href = canvas.toDataURL("image/png");
         link.download = "collage.png";
+        link.href = canvas.toDataURL("image/png");
         link.click();
     });
 }
