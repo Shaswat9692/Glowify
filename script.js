@@ -69,6 +69,9 @@ function adjustFilter() {
 
     ctx.filter = filterValue;
     ctx.drawImage(originalImage, 0, 0, canvas.width, canvas.height);
+
+    // Display the save button after applying the filter
+    document.getElementById('saveBtn').style.display = 'block';
 }
 
 function activateCrop() {
