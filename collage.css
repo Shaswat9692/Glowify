@@ -1,124 +1,105 @@
-/* General Styling */
 body {
     font-family: Arial, sans-serif;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0;
-    padding: 0;
-}
-
-header {
-    background-color: #ff6f61;
-    color: white;
-    padding: 1em;
-    text-align: center;
-    width: 100%;
-}
-
-.editor-controls {
-    margin: 1em 0;
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
     justify-content: center;
-}
-
-button {
-    padding: 0.5em 1em;
-    cursor: pointer;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
-.collage-options {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    text-align: center;
+    align-items: flex-start;
+    background-color: #0d0d0d;
+    color: #00ff00;
 }
 
 .collage-container {
+    display: flex;
+    max-width: 1000px;
+    margin: 20px;
+    background: black;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.preview-area {
+    width: 300px;
+    padding: 10px;
+    border-right: 1px solid #444;
+    text-align: center;
+}
+
+.collage-preview {
+    width: 100%;
+    height: 400px;
+    background-color: #222;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.save-button {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #444;
+    color: #00ff00;
+    border: none;
+    cursor: pointer;
+}
+
+.editor-area {
+    flex-grow: 1;
+    padding: 10px;
+}
+
+.grid-selection, .frame-selection {
+    margin: 10px 0;
+    text-align: center;
+}
+
+button {
+    padding: 8px 12px;
+    margin: 5px;
+    background-color: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+/* Frame Layout Previews */
+.frame-preview {
+    width: 60px;
+    height: 60px;
+    background-color: #222;
+    border: 1px solid #00ff00;
     display: grid;
-    gap: 5px;
-    width: 80vw;
-    max-width: 600px;
-    margin-top: 1em;
-    border: 1px solid #ddd;
-    overflow: hidden;
-    position: relative;
 }
 
-/* Layout Styles */
-.collage-container.2x1 {
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(2, 1fr);
-}
-
-.collage-container.1x2 {
+.grid-2x2 {
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 1fr;
 }
 
-.collage-container.3x3 {
+.grid-3x3 {
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
 }
 
-/* Additional Layouts */
-.collage-container.vertical-split {
-    grid-template-columns: 1fr 1fr;
-}
-
-.collage-container.horizontal-split {
+.grid-1x3 {
     grid-template-columns: 1fr;
     grid-template-rows: repeat(3, 1fr);
 }
 
-.collage-container.two-by-two {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+.photo-slot {
+    width: 80px;
+    height: 80px;
+    background-color: #333;
+    border: 1px dashed #00ff00;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.collage-container.4x4 {
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(4, 1fr);
-}
-
-.collage-container.landscape {
-    aspect-ratio: 4 / 3;
-}
-
-.collage-container.portrait {
-    aspect-ratio: 3 / 4;
-}
-
-.collage-container.fb-cover {
-    grid-template-columns: repeat(3, 1fr);
-    aspect-ratio: 851 / 315;
-}
-
-/* Image Styling */
-.collage-image {
+.photo-slot img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s;
-}
-
-.collage-image:hover {
-    transform: scale(1.05);
-}
-
-/* Drag-and-Drop Styling */
-.collage-image.dragging {
-    opacity: 0.5;
-    border: 2px dashed #4CAF50;
+    border-radius: 5px;
 }

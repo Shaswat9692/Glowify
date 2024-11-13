@@ -3,43 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Glowify Collage Editor</title>
+    <title>Photo Collage Maker</title>
     <link rel="stylesheet" href="collage.css">
 </head>
 <body>
-    <header>
-        <h1>Glowify - Create Your Collage</h1>
-    </header>
-    <main>
-        <div class="editor-controls">
-            <input type="file" id="uploadImage" multiple onchange="loadImages(event)">
-            <button onclick="toggleCollageOptions()">Choose Collage Layout</button>
-            
-            <div id="collageOptions" class="collage-options" style="display: none;">
-                <h3>Square (1:1)</h3>
-                <button onclick="setCollageGrid('2x1')">Two Images - Column</button>
-                <button onclick="setCollageGrid('1x2')">Two Images - Row</button>
-                <button onclick="setCollageGrid('3x3')">Three Images - Grid</button>
-                
-                <h3>Landscape (4:3)</h3>
-                <button onclick="setCollageGrid('2x1-landscape')">Two Images - Column</button>
-                <button onclick="setCollageGrid('1x2-landscape')">Two Images - Row</button>
-                
-                <h3>Portrait (3:4)</h3>
-                <button onclick="setCollageGrid('2x1-portrait')">Two Images - Column</button>
-                <button onclick="setCollageGrid('1x2-portrait')">Two Images - Row</button>
-                
-                <h3>FB Cover (851x315)</h3>
-                <button onclick="setCollageGrid('fb-cover')">FB Cover Layout</button>
+    <div class="collage-container">
+        <div class="preview-area">
+            <h2>Collage Preview</h2>
+            <div id="collagePreview" class="collage-preview">
+                <!-- Collage will be displayed here -->
             </div>
-            
             <button onclick="saveCollage()">Save Collage</button>
         </div>
 
-        <div id="collageContainer" class="collage-container"></div>
-    </main>
+        <div class="editor-area">
+            <h1>Photo Collage Maker</h1>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+            <!-- Grid Selection -->
+            <div class="grid-selection">
+                <h2>Select a Grid</h2>
+                <button onclick="selectGrid('1:1')">1:1</button>
+                <button onclick="selectGrid('3:4')">3:4</button>
+                <button onclick="selectGrid('4:3')">4:3</button>
+                <button onclick="selectGrid('2:6')">2:6</button>
+                <button onclick="selectGrid('2:5')">2:5</button>
+            </div>
+
+            <!-- Photo Upload Section -->
+            <input type="file" id="photoUpload" multiple accept="image/*" onchange="uploadPhotos()">
+            
+            <!-- Frame Selection -->
+            <div class="frame-selection" id="frameSelection">
+                <h2>Select a Frame</h2>
+                <!-- Frames will be dynamically loaded here -->
+            </div>
+        </div>
+    </div>
+
     <script src="collage.js"></script>
 </body>
 </html>
