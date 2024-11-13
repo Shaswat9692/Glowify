@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Photo Enhancer</title>
+    <link rel="stylesheet" href="AI.css">
+</head>
+<body>
+    <header>
+        <h1>AI Photo Enhancer</h1>
+        <a href="index.html">Back to Home</a>
+    </header>
+    <main>
+        <div class="upload-section">
+            <input type="file" id="uploadImage" accept="image/*" onchange="previewImage(event)">
+            <button id="enhanceBtn" onclick="enhanceImage()" disabled>Enhance Image</button>
+        </div>
+        <div class="preview-section">
+            <canvas id="canvas" style="max-width: 600px; max-height: 400px;"></canvas>
+        </div>
+        <div class="save-section" style="display: none;">
+            <button id="saveBtn" onclick="saveEnhancedImage()">Save Enhanced Image</button>
+        </div>
+    </main>
+    <script src="AI.js"></script>
+</body>
+</html>
