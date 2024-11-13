@@ -16,27 +16,91 @@
             <input type="file" id="uploadImage" onchange="loadImage(event)">
             <button id="addFilterBtn" onclick="toggleFilterOptions()">Add Filter</button>
             <div id="filterOptions" style="display: none;">
-                <button onclick="applyFilter('grayscale')">Grayscale</button>
-                <button onclick="applyFilter('sepia')">Sepia</button>
-                <button onclick="applyFilter('invert')">Invert</button>
-                <button onclick="applyFilter('brightness')">Brightness</button>
-                <button onclick="applyFilter('contrast')">Contrast</button>
-                <button onclick="applyFilter('saturate')">Saturate</button>
-                <button onclick="applyFilter('hue-rotate')">Hue Rotate</button>
-                <button onclick="applyFilter('blur')">Blur</button>
-                <button onclick="applyFilter('opacity')">Opacity</button>
-                <button onclick="applyFilter('drop-shadow')">Drop Shadow</button>
-                <button onclick="applyFilter('warm')">Warm</button>
-                <button onclick="applyFilter('cold')">Cold</button>
-                <button onclick="applyFilter('vibrance')">Vibrance</button>
-                <button onclick="applyFilter('moonlight')">Moonlight</button>
-                <button onclick="applyFilter('soften')">Soften</button>
-                <button onclick="applyFilter('sharpen')">Sharpen</button>
-                <button onclick="applyFilter('lighten')">Lighten</button>
-                <button onclick="applyFilter('darken')">Darken</button>
-                <button onclick="applyFilter('antique')">Antique</button>
-                <button onclick="applyFilter('vintage')">Vintage</button>
-                <button onclick="applyFilter('highlights')">Highlights</button>
+                <!-- Filter buttons with preview images -->
+                <div class="filter-option">
+                    <img src="assets/filter/Grayscale.png" alt="Grayscale Preview" class="filter-preview">
+                    <button onclick="applyFilter('grayscale')">Grayscale</button>
+                </div>
+                <div class="filter-option">
+                    <img src="assets/filter/Sepia.png" alt="Sepia Preview" class="filter-preview">
+                    <button onclick="applyFilter('sepia')">Sepia</button>
+                </div>
+                <div class="filter-option">
+                    <img src="assets/filter/Invert.png" alt="Invert Preview" class="filter-preview">
+                    <button onclick="applyFilter('invert')">Invert</button>
+                </div>
+                <div class="filter-option">
+                    <img src="assets/filter/Brightness.png" alt="Brightness Preview" class="filter-preview">
+                    <button onclick="applyFilter('brightness')">Brightness</button>
+                </div>
+                <div class="filter-option">
+                    <img src="assets/filter/Contrast.png" alt="Contrast Preview" class="filter-preview">
+                    <button onclick="applyFilter('contrast')">Contrast</button>
+                </div>
+                <div class="filter-option">
+                    <img src="assets/filter/Saturate.png" alt="Saturate Preview" class="filter-preview">
+                    <button onclick="applyFilter('saturate')">Saturate</button>
+                </div>
+                <div class="filter-option">
+                    <img src="assets/filter/Hue Rotate.png" alt="Hue Rotate Preview" class="filter-preview">
+                    <button onclick="applyFilter('hue-rotate')">Hue Rotate</button>
+                </div>
+                <div class="filter-option">
+                    <img src="assets/filter/Blur.png" alt="Blur Preview" class="filter-preview">
+                    <button onclick="applyFilter('blur')">Blur</button>
+                </div>
+                <div class="filter-option">
+                    <img src="assets/filter/Opacity.png" alt="Opacity Preview" class="filter-preview">
+                    <button onclick="applyFilter('opacity')">Opacity</button>
+                </div>
+                <div class="filter-option">
+                    <img src="assets/filter/Drop Shadow.png" alt="Drop Shadow Preview" class="filter-preview">
+                    <button onclick="applyFilter('drop-shadow')">Drop Shadow</button>
+                </div>
+                <div class="filter-option">
+                    <img src="assets/filter/Warm.png" alt="Warm Preview" class="filter-preview">
+                    <button onclick="applyFilter('warm')">Warm</button>
+                </div>
+                <div class="filter-option">
+                    <img src="assets/filter/Cold.png" alt="Cold Preview" class="filter-preview">
+                    <button onclick="applyFilter('cold')">Cold</button>
+                </div>
+                <div class="filter-option">
+                    <img src="assets/filter/Vibrance.png" alt="Vibrance Preview" class="filter-preview">
+                    <button onclick="applyFilter('vibrance')">Vibrance</button>
+                </div>
+                <div class="filter-option">
+                    <img src="assets/filter/Moonlight.png" alt="Moonlight Preview" class="filter-preview">
+                    <button onclick="applyFilter('moonlight')">Moonlight</button>
+                </div>
+                <div class="filter-option">
+                    <img src="assets/filter/Soften.png" alt="Soften Preview" class="filter-preview">
+                    <button onclick="applyFilter('soften')">Soften</button>
+                </div>
+                <div class="filter-option">
+                    <img src="assets/filter/Sharpen.png" alt="Sharpen Preview" class="filter-preview">
+                    <button onclick="applyFilter('sharpen')">Sharpen</button>
+                </div>
+                <div class="filter-option">
+                    <img src="assets/filter/Lighten.png" alt="Lighten Preview" class="filter-preview">
+                    <button onclick="applyFilter('lighten')">Lighten</button>
+                </div>
+                <div class="filter-option">
+                    <img src="assets/filter/Darken.png" alt="Darken Preview" class="filter-preview">
+                    <button onclick="applyFilter('darken')">Darken</button>
+                </div>
+                <div class="filter-option">
+                    <img src="assets/filter/Anitiqe.png" alt="Antique Preview" class="filter-preview">
+                    <button onclick="applyFilter('antique')">Antique</button>
+                </div>
+                <div class="filter-option">
+                    <img src="assets/filter/Vintage.png" alt="Vintage Preview" class="filter-preview">
+                    <button onclick="applyFilter('vintage')">Vintage</button>
+                </div>
+                <div class="filter-option">
+                    <img src="assets/filter/Highlights.png" alt="Highlights Preview" class="filter-preview">
+                    <button onclick="applyFilter('highlights')">Highlights</button>
+                </div>
             </div>
             <div id="sliderContainer" style="display: none;">
                 <input type="range" id="filterSlider" min="-100" max="100" value="0" oninput="adjustFilter()">

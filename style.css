@@ -1,8 +1,7 @@
 /* General body styling */
 body {
     font-family: Arial, sans-serif;
-    background: url("https://www.pexels.com/photo/abstract-pink-and-blue-gradient-46798/") no-repeat center center fixed;
-    background-image: url("assets/background.png");
+    background: url("assets/background.png") no-repeat center center fixed;
     background-size: cover;
     color: #ffffff;
     margin: 0;
@@ -97,6 +96,20 @@ canvas {
     grid-template-columns: repeat(5, 1fr);
     gap: 10px;
     margin-top: 20px;
+}
+
+/* Filter option and preview styling */
+.filter-option {
+    display: inline-block;
+    text-align: center;
+    margin: 10px;
+}
+
+.filter-preview {
+    width: 60px; /* Adjust size as needed */
+    height: auto;
+    display: block;
+    margin: 0 auto 5px;
 }
 
 .filter-options button {
