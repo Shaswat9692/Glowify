@@ -119,30 +119,7 @@
     </main>
     <script src="https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.js"></script>
     <script src="script.js"></script>
-    <script>
-        function loadImage(event) {
-            const canvas = document.getElementById("canvas");
-            const ctx = canvas.getContext("2d");
-            const image = new Image();
-            image.onload = function () {
-                canvas.width = image.width;
-                canvas.height = image.height;
-                ctx.drawImage(image, 0, 0);
-                // Show the Add Filter and Crop buttons
-                document.getElementById("addFilterBtn").style.display = "inline-block";
-                document.getElementById("cropBtn").style.display = "inline-block";
-            };
-            image.src = URL.createObjectURL(event.target.files[0]);
-        }
-
-        function toggleFilterOptions() {
-            const filterOptions = document.getElementById("filterOptions");
-            filterOptions.style.display = filterOptions.style.display === "none" ? "block" : "none";
-        }
-        function goToCollagePage() {
-            window.location.href = 'collage/collage.html';
-        }
-    </script>
+   
     
 </body>
 </html>
