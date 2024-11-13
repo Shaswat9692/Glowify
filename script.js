@@ -6,14 +6,17 @@ let cropper = null;
 
 function loadImage(event) {
     const image = new Image();
-    image.src = URL.createObjectURL(event.target.files[0]);
     image.onload = function () {
         originalImage = image;
         canvas.width = image.width;
         canvas.height = image.height;
         ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
         document.getElementById('saveBtn').style.display = 'none';
+        // Show the Add Filter and Crop buttons
+        document.getElementById('addFilterBtn').style.display = 'inline-block';
+        document.getElementById('cropBtn').style.display = 'inline-block';
     };
+    image.src = URL.createObjectURL(event.target.files[0]);
 }
 
 function toggleFilterOptions() {
@@ -41,73 +44,34 @@ function adjustFilter() {
     let filterValue = '';
 
     switch (currentFilter) {
-        case 'grayscale':
-            filterValue = `grayscale(${Math.abs(intensity)}%)`;
-            break;
-        case 'sepia':
-            filterValue = `sepia(${Math.abs(intensity)}%)`;
-            break;
-        case 'invert':
-            filterValue = `invert(${Math.abs(intensity)}%)`;
-            break;
-        case 'brightness':
-            filterValue = `brightness(${1 + intensity / 100})`;
-            break;
-        case 'contrast':
-            filterValue = `contrast(${1 + intensity / 100})`;
-            break;
-        case 'saturate':
-            filterValue = `saturate(${1 + intensity / 100})`;
-            break;
-        case 'hue-rotate':
-            filterValue = `hue-rotate(${intensity * 3.6}deg)`;
-            break;
-        case 'blur':
-            filterValue = `blur(${Math.abs(intensity) / 10}px)`;
-            break;
-        case 'opacity':
-            filterValue = `opacity(${1 - Math.abs(intensity) / 100})`;
-            break;
-        case 'drop-shadow':
-            filterValue = `drop-shadow(${intensity / 5}px ${intensity / 5}px ${Math.abs(intensity) / 5}px black)`;
-            break;
-        case 'warm':
-            filterValue = `sepia(${Math.abs(intensity) / 200}) brightness(${1 + intensity / 200})`;
-            break;
-        case 'cold':
-            filterValue = `hue-rotate(200deg) saturate(${1 + intensity / 200}) brightness(${1 - intensity / 300})`;
-            break;
-        case 'vibrance':
-            filterValue = `saturate(${1 + intensity / 50}) contrast(${1 + intensity / 50})`;
-            break;
-        case 'moonlight':
-            filterValue = `contrast(${1 + intensity / 200}) brightness(${1 + intensity / 200})`;
-            break;
-        case 'soften':
-            filterValue = `blur(${Math.abs(intensity) / 50}px)`;
-            break;
-        case 'sharpen':
-            filterValue = `contrast(${1 + intensity / 50}) saturate(${1 + intensity / 50})`;
-            break;
-        case 'lighten':
-            filterValue = `brightness(${1 + intensity / 100})`;
-            break;
-        case 'darken':
-            filterValue = `brightness(${1 - intensity / 100})`;
-            break;
-        case 'antique':
-            filterValue = `sepia(${Math.abs(intensity) / 100}) contrast(${1 - intensity / 200})`;
-            break;
-        case 'vintage':
-            filterValue = `sepia(${Math.abs(intensity) / 100}) saturate(${1 - intensity / 200})`;
-            break;
-        case 'highlights':
-            filterValue = `brightness(${1 + intensity / 200}) contrast(${1 + intensity / 100})`;
-            break;
+        case 'grayscale': filterValue = `grayscale(${Math.abs(intensity)}%)`; break;
+        case 'sepia': filterValue = `sepia(${Math.abs(intensity)}%)`; break;
+        case 'invert': filterValue = `invert(${Math.abs(intensity)}%)`; break;
+        case 'brightness': filterValue = `brightness(${1 + intensity / 100})`; break;
+        case 'contrast': filterValue = `contrast(${1 + intensity / 100})`; break;
+        case 'saturate': filterValue = `saturate(${1 + intensity / 100})`; break;
+        case 'hue-rotate': filterValue = `hue-rotate(${intensity * 3.6}deg)`; break;
+        case 'blur': filterValue = `blur(${Math.abs(intensity) / 10}px)`; break;
+        case 'opacity': filterValue = `opacity(${1 - Math.abs(intensity) / 100})`; break;
+        case 'drop-shadow': filterValue = `drop-shadow(${intensity / 5}px ${intensity / 5}px ${Math.abs(intensity) / 5}px black)`; break;
+        case 'warm': filterValue = `sepia(${Math.abs(intensity) / 200}) brightness(${1 + intensity / 200})`; break;
+        case 'cold': filterValue = `hue-rotate(200deg) saturate(${1 + intensity / 200}) brightness(${1 - intensity / 300})`; break;
+        case 'vibrance': filterValue = `saturate(${1 + intensity / 50}) contrast(${1 + intensity / 50})`; break;
+        case 'moonlight': filterValue = `contrast(${1 + intensity / 200}) brightness(${1 + intensity / 200})`; break;
+        case 'soften': filterValue = `blur(${Math.abs(intensity) / 50}px)`; break;
+        case 'sharpen': filterValue = `contrast(${1 + intensity / 50}) saturate(${1 + intensity / 50})`; break;
+        case 'lighten': filterValue = `brightness(${1 + intensity / 100})`; break;
+        case 'darken': filterValue = `brightness(${1 - intensity / 100})`; break;
+        case 'antique': filterValue = `sepia(${Math.abs(intensity) / 100}) contrast(${1 - intensity / 200})`; break;
+        case 'vintage': filterValue = `sepia(${Math.abs(intensity) / 100}) saturate(${1 - intensity / 200})`; break;
+        case 'highlights': filterValue = `brightness(${1 + intensity / 200}) contrast(${1 + intensity / 100})`; break;
     }
 
     ctx.filter = filterValue;
     ctx.drawImage(originalImage, 0, 0, canvas.width, canvas.height);
+
+    // Display the save button after applying the filter
+    document.getElementById('saveBtn').style.display = 'block';
 }
 
 function activateCrop() {
@@ -129,10 +93,21 @@ function saveImage() {
         const dataURL = croppedCanvas.toDataURL('image/png');
         const link = document.createElement('a');
         link.href = dataURL;
-        link.download = 'edited-image.png';
+        link.download = 'edited-pic-by-glorify.png';  // Set the default filename here
         link.click();
         cropper.destroy();
         cropper = null;
         document.getElementById('saveBtn').style.display = 'none';
+    } else {
+        // If no cropper is active, save the edited image from the canvas
+        const dataURL = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.href = dataURL;
+        link.download = 'edited-pic-by-glorify.png';  // Set the default filename here
+        link.click();
     }
+}
+
+function goToCollagePage() {
+    window.location.href = 'collage/collage.html';
 }
