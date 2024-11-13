@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glowify Collage Editor</title>
+    <link rel="stylesheet" href="collage.css">
+</head>
+<body>
+    <header>
+        <h1>Glowify - Create Your Collage</h1>
+    </header>
+    <main>
+        <div class="editor-controls">
+            <input type="file" id="uploadImage" multiple onchange="loadImages(event)">
+            <button onclick="toggleCollageOptions()">Choose Collage Layout</button>
+            
+            <div id="collageOptions" class="collage-options" style="display: none;">
+                <button onclick="setCollageGrid('1:1')">Square (1:1)</button>
+                <button onclick="setCollageGrid('4:3')">Landscape (4:3)</button>
+                <button onclick="setCollageGrid('3:4')">Portrait (3:4)</button>
+                <button onclick="setCollageGrid('851x315')">FB Cover (851x315)</button>
+            </div>
+            
+            <button onclick="addGridLines()">Add Grid Lines</button>
+            <button onclick="saveCollage()">Save Collage</button>
+        </div>
+
+        <div id="collageContainer" class="collage-container"></div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script src="collage.js"></script>
+</body>
+</html>
