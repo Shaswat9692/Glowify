@@ -1,52 +1,50 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, send_file, jsonify
 from PIL import Image, ImageEnhance
-import io
-import base64
+import os
 
 app = Flask(__name__)
 
-# AI enhancement function (brightness, contrast adjustments)
-def enhance_image(image_data):
-    try:
-        image = Image.open(io.BytesIO(image_data))
-        
-        # Example AI enhancements (adjust as needed)
-        enhancer = ImageEnhance.Contrast(image)
-        image = enhancer.enhance(1.5)  # Increase contrast
-        enhancer = ImageEnhance.Brightness(image)
-        image = enhancer.enhance(1.2)  # Increase brightness
+# Define the upload folder path
+UPLOAD_FOLDER = 'uploads'
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
 
-        # Convert enhanced image back to base64
-        buffer = io.BytesIO()
-        image.save(buffer, format="PNG")
-        enhanced_image_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
-        
-        return enhanced_image_base64
-
-    except Exception as e:
-        print(f"[Error] Image enhancement failed: {e}")
-        return None
+@app.route('/')
+def home():
+    return 'Image Enhancement Service is Running!'
 
 @app.route('/enhance', methods=['POST'])
-def enhance():
+def enhance_image():
+    if 'image' not in request.files:
+        return 'No image uploaded', 400
+
+    image_file = request.files['image']
+    if image_file.filename == '':
+        return 'No selected image', 400
+
     try:
-        data = request.get_json()
-        if not data or 'image' not in data:
-            print("[Error] Invalid request data.")
-            return jsonify({'error': 'Invalid request data'}), 400
-        
-        image_data = base64.b64decode(data['image'].split(',')[1])
-        enhanced_image_base64 = enhance_image(image_data)
-        
-        if enhanced_image_base64:
-            return jsonify({'enhancedImage': f'data:image/png;base64,{enhanced_image_base64}'})
-        else:
-            print("[Error] Enhancement returned None.")
-            return jsonify({'error': 'Image enhancement failed'}), 500
+        # Save the uploaded image
+        input_image_path = os.path.join(UPLOAD_FOLDER, image_file.filename)
+        print(f"Saving uploaded image to: {input_image_path}")
+        image_file.save(input_image_path)
+
+        # Enhance the image
+        image = Image.open(input_image_path)
+        print("Image opened successfully for enhancement.")
+        enhancer = ImageEnhance.Sharpness(image)
+        enhanced_image = enhancer.enhance(2.0)  # Adjust this value to enhance clarity
+
+        # Save enhanced image
+        enhanced_image_path = os.path.join(UPLOAD_FOLDER, 'enhanced_' + image_file.filename)
+        print(f"Saving enhanced image to: {enhanced_image_path}")
+        enhanced_image.save(enhanced_image_path)
+
+        # Send enhanced image back to the client
+        return send_file(enhanced_image_path, mimetype='image/jpeg')
 
     except Exception as e:
-        print(f"[Error] Processing request failed: {e}")
-        return jsonify({'error': str(e)}), 500
+        print(f"Error during image enhancement: {e}")
+        return jsonify({'error': 'Error processing image', 'details': str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(debug=True)
