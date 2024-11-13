@@ -94,3 +94,4 @@ function saveImage() {
         document.getElementById('saveBtn').style.display = 'none';
     }
 }
+
