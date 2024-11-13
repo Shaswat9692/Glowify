@@ -16,13 +16,23 @@
             <button onclick="toggleCollageOptions()">Choose Collage Layout</button>
             
             <div id="collageOptions" class="collage-options" style="display: none;">
-                <button onclick="setCollageGrid('1:1')">Square (1:1)</button>
-                <button onclick="setCollageGrid('4:3')">Landscape (4:3)</button>
-                <button onclick="setCollageGrid('3:4')">Portrait (3:4)</button>
-                <button onclick="setCollageGrid('851x315')">FB Cover (851x315)</button>
+                <h3>Square (1:1)</h3>
+                <button onclick="setCollageGrid('2x1')">Two Images - Column</button>
+                <button onclick="setCollageGrid('1x2')">Two Images - Row</button>
+                <button onclick="setCollageGrid('3x3')">Three Images - Grid</button>
+                
+                <h3>Landscape (4:3)</h3>
+                <button onclick="setCollageGrid('2x1-landscape')">Two Images - Column</button>
+                <button onclick="setCollageGrid('1x2-landscape')">Two Images - Row</button>
+                
+                <h3>Portrait (3:4)</h3>
+                <button onclick="setCollageGrid('2x1-portrait')">Two Images - Column</button>
+                <button onclick="setCollageGrid('1x2-portrait')">Two Images - Row</button>
+                
+                <h3>FB Cover (851x315)</h3>
+                <button onclick="setCollageGrid('fb-cover')">FB Cover Layout</button>
             </div>
             
-            <button onclick="addGridLines()">Add Grid Lines</button>
             <button onclick="saveCollage()">Save Collage</button>
         </div>
 
