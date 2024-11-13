@@ -1,64 +1,84 @@
-let originalImage = null;
+const originalCanvas = document.getElementById('original-canvas');
+const enhancedCanvas = document.getElementById('enhanced-canvas');
+const originalCtx = originalCanvas.getContext('2d');
+const enhancedCtx = enhancedCanvas.getContext('2d');
+const slider = document.getElementById('slider');
+const downloadBtn = document.getElementById('download-btn');
+let isDragging = false;
 
-// Function to preview the uploaded image
-function previewImage(event) {
-    const image = new Image();
-    image.src = URL.createObjectURL(event.target.files[0]);
-    image.onload = function () {
-        originalImage = image;
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = image.width;
-        canvas.height = image.height;
-        ctx.drawImage(image, 0, 0);
-        document.getElementById('enhanceBtn').disabled = false;
-    };
-}
+// Load Image Functionality
+document.getElementById('image-input').addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    if (file) {
+        const img = new Image();
+        img.src = URL.createObjectURL(file);
+        img.onload = function () {
+            // Ensure the container matches the image aspect ratio
+            const container = document.querySelector('.comparison-container');
+            container.style.width = `${img.width}px`;
+            container.style.height = `${img.height}px`;
 
-// Function to send the image to AI.py for enhancement
-function enhanceImage() {
-    const canvas = document.getElementById('canvas');
-    const dataURL = canvas.toDataURL('image/png');
-    
-    // Send the image to the Python backend using fetch API
-    fetch('http://localhost:5000/enhance', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ image: dataURL })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Failed to enhance the image.');
-        }
-        return response.json();
-    })
-    .then(data => {
-        if (data.enhancedImage) {
-            const enhancedImage = new Image();
-            enhancedImage.src = data.enhancedImage;
-            enhancedImage.onload = function () {
-                const ctx = canvas.getContext('2d');
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.drawImage(enhancedImage, 0, 0);
-                document.querySelector('.save-section').style.display = 'block';
-            };
-        } else {
-            alert('Image enhancement failed. Please try again.');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('There was an error enhancing the image.');
-    });
-}
+            // Set canvas sizes to match image
+            originalCanvas.width = enhancedCanvas.width = img.width;
+            originalCanvas.height = enhancedCanvas.height = img.height;
 
-// Function to save the enhanced image
-function saveEnhancedImage() {
-    const canvas = document.getElementById('canvas');
+            // Draw original image
+            originalCtx.clearRect(0, 0, img.width, img.height);
+            originalCtx.drawImage(img, 0, 0);
+            
+            // Simulate enhancement by slightly adjusting brightness for demonstration
+            enhancedCtx.filter = 'brightness(1.2)';
+            enhancedCtx.clearRect(0, 0, img.width, img.height);
+            enhancedCtx.drawImage(img, 0, 0);
+
+            // Make the download button visible after the image is loaded
+            downloadBtn.style.display = 'block';
+        };
+    }
+});
+
+// Slider Drag Functionality
+slider.addEventListener('mousedown', () => {
+    isDragging = true;
+});
+
+document.addEventListener('mouseup', () => {
+    isDragging = false;
+});
+
+document.addEventListener('mousemove', (event) => {
+    if (isDragging) {
+        const containerRect = originalCanvas.getBoundingClientRect();
+        let newLeft = event.clientX - containerRect.left;
+
+        // Constrain slider position to within canvas bounds
+        if (newLeft < 0) newLeft = 0;
+        if (newLeft > containerRect.width) newLeft = containerRect.width;
+
+        // Update slider position
+        slider.style.left = `${newLeft}px`;
+
+        // Update canvas clip for enhanced image
+        enhancedCanvas.style.clip = `rect(0px, ${newLeft}px, ${containerRect.height}px, 0px)`;
+    }
+});
+
+// Download Enhanced Image Functionality
+downloadBtn.addEventListener('click', () => {
     const link = document.createElement('a');
-    link.download = 'enhanced_image.png';
-    link.href = canvas.toDataURL();
+    link.download = 'enhanced-image.png';
+    
+    // Create a temporary canvas to merge the original and enhanced sections
+    const tempCanvas = document.createElement('canvas');
+    const tempCtx = tempCanvas.getContext('2d');
+
+    tempCanvas.width = originalCanvas.width;
+    tempCanvas.height = originalCanvas.height;
+
+    // Draw the enhanced image on the temporary canvas
+    tempCtx.drawImage(enhancedCanvas, 0, 0);
+
+    // Convert to data URL and trigger download
+    link.href = tempCanvas.toDataURL('image/png');
     link.click();
-}
+});

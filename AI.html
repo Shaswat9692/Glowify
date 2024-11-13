@@ -4,104 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Photo Enhancer</title>
-    <style>
-        body {
-            background-color: #1f1f2e;
-            color: white;
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
-        .container {
-            margin: 50px auto;
-            max-width: 600px;
-            background-color: #2b2b3a;
-            padding: 20px;
-            border-radius: 10px;
-        }
-        input[type="file"] {
-            margin: 10px 0;
-        }
-        button {
-            background-color: #28a745;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-        #enhanced-image {
-            display: none;
-            margin-top: 20px;
-            max-width: 100%;
-            border: 2px solid #28a745;
-            border-radius: 10px;
-        }
-        .download-link {
-            display: none;
-            margin-top: 10px;
-            color: #28a745;
-            font-size: 18px;
-            text-decoration: none;
-        }
-    </style>
+    <link rel="stylesheet" href="AI.css">
 </head>
 <body>
     <div class="container">
         <h1>AI Photo Enhancer</h1>
-        <form id="enhance-form" enctype="multipart/form-data">
-            <input type="file" id="image-input" name="image" accept="image/*" required>
-            <br>
-            <button type="submit">Enhance Image</button>
-        </form>
-        <img id="enhanced-image" alt="Enhanced Image">
-        <a id="download-link" class="download-link" download>Download Enhanced Image</a>
+        <input type="file" id="image-input" accept="image/*" />
+        
+        <!-- Comparison container with labels for Before and After -->
+        <div class="comparison-container">
+            <div class="image-wrapper">
+                <span class="label before-label">Before</span>
+                <canvas id="original-canvas"></canvas>
+                <div class="slider" id="slider"></div>
+                <canvas id="enhanced-canvas"></canvas>
+                <span class="label after-label">After</span>
+            </div>
+        </div>
+        
+        <button id="download-btn" style="display:none;">Download Enhanced Image</button>
     </div>
-
-    <script>
-        document.getElementById('enhance-form').addEventListener('submit', async function(event) {
-            event.preventDefault();
-            const fileInput = document.getElementById('image-input');
-            const file = fileInput.files[0];
-            if (!file) {
-                alert('Please choose an image.');
-                return;
-            }
-
-            const formData = new FormData();
-            formData.append('image', file);
-
-            try {
-                const response = await fetch('http://127.0.0.1:5000/enhance', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (!response.ok) {
-                    throw new Error('Error enhancing the image.');
-                }
-
-                const data = await response.blob();
-                const imageUrl = URL.createObjectURL(data);
-
-                // Display enhanced image
-                const enhancedImage = document.getElementById('enhanced-image');
-                enhancedImage.src = imageUrl;
-                enhancedImage.style.display = 'block';
-
-                // Setup download link
-                const downloadLink = document.getElementById('download-link');
-                downloadLink.href = imageUrl;
-                downloadLink.style.display = 'block';
-                downloadLink.innerText = 'Download Enhanced Image';
-
-            } catch (error) {
-                alert('There was an error enhancing the image.');
-                console.error(error);
-            }
-        });
-    </script>
+    <script src="AI.js"></script>
 </body>
 </html>

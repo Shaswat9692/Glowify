@@ -41,27 +41,69 @@ function adjustFilter() {
     let filterValue = '';
 
     switch (currentFilter) {
-        case 'grayscale': filterValue = `grayscale(${Math.abs(intensity)}%)`; break;
-        case 'sepia': filterValue = `sepia(${Math.abs(intensity)}%)`; break;
-        case 'invert': filterValue = `invert(${Math.abs(intensity)}%)`; break;
-        case 'brightness': filterValue = `brightness(${1 + intensity / 100})`; break;
-        case 'contrast': filterValue = `contrast(${1 + intensity / 100})`; break;
-        case 'saturate': filterValue = `saturate(${1 + intensity / 100})`; break;
-        case 'hue-rotate': filterValue = `hue-rotate(${intensity * 3.6}deg)`; break;
-        case 'blur': filterValue = `blur(${Math.abs(intensity) / 10}px)`; break;
-        case 'opacity': filterValue = `opacity(${1 - Math.abs(intensity) / 100})`; break;
-        case 'drop-shadow': filterValue = `drop-shadow(${intensity / 5}px ${intensity / 5}px ${Math.abs(intensity) / 5}px black)`; break;
-        case 'warm': filterValue = `sepia(${Math.abs(intensity) / 200}) brightness(${1 + intensity / 200})`; break;
-        case 'cold': filterValue = `hue-rotate(200deg) saturate(${1 + intensity / 200}) brightness(${1 - intensity / 300})`; break;
-        case 'vibrance': filterValue = `saturate(${1 + intensity / 50}) contrast(${1 + intensity / 50})`; break;
-        case 'moonlight': filterValue = `contrast(${1 + intensity / 200}) brightness(${1 + intensity / 200})`; break;
-        case 'soften': filterValue = `blur(${Math.abs(intensity) / 50}px)`; break;
-        case 'sharpen': filterValue = `contrast(${1 + intensity / 50}) saturate(${1 + intensity / 50})`; break;
-        case 'lighten': filterValue = `brightness(${1 + intensity / 100})`; break;
-        case 'darken': filterValue = `brightness(${1 - intensity / 100})`; break;
-        case 'antique': filterValue = `sepia(${Math.abs(intensity) / 100}) contrast(${1 - intensity / 200})`; break;
-        case 'vintage': filterValue = `sepia(${Math.abs(intensity) / 100}) saturate(${1 - intensity / 200})`; break;
-        case 'highlights': filterValue = `brightness(${1 + intensity / 200}) contrast(${1 + intensity / 100})`; break;
+        case 'grayscale':
+            filterValue = `grayscale(${Math.abs(intensity)}%)`;
+            break;
+        case 'sepia':
+            filterValue = `sepia(${Math.abs(intensity)}%)`;
+            break;
+        case 'invert':
+            filterValue = `invert(${Math.abs(intensity)}%)`;
+            break;
+        case 'brightness':
+            filterValue = `brightness(${1 + intensity / 100})`;
+            break;
+        case 'contrast':
+            filterValue = `contrast(${1 + intensity / 100})`;
+            break;
+        case 'saturate':
+            filterValue = `saturate(${1 + intensity / 100})`;
+            break;
+        case 'hue-rotate':
+            filterValue = `hue-rotate(${intensity * 3.6}deg)`;
+            break;
+        case 'blur':
+            filterValue = `blur(${Math.abs(intensity) / 10}px)`;
+            break;
+        case 'opacity':
+            filterValue = `opacity(${1 - Math.abs(intensity) / 100})`;
+            break;
+        case 'drop-shadow':
+            filterValue = `drop-shadow(${intensity / 5}px ${intensity / 5}px ${Math.abs(intensity) / 5}px black)`;
+            break;
+        case 'warm':
+            filterValue = `sepia(${Math.abs(intensity) / 200}) brightness(${1 + intensity / 200})`;
+            break;
+        case 'cold':
+            filterValue = `hue-rotate(200deg) saturate(${1 + intensity / 200}) brightness(${1 - intensity / 300})`;
+            break;
+        case 'vibrance':
+            filterValue = `saturate(${1 + intensity / 50}) contrast(${1 + intensity / 50})`;
+            break;
+        case 'moonlight':
+            filterValue = `contrast(${1 + intensity / 200}) brightness(${1 + intensity / 200})`;
+            break;
+        case 'soften':
+            filterValue = `blur(${Math.abs(intensity) / 50}px)`;
+            break;
+        case 'sharpen':
+            filterValue = `contrast(${1 + intensity / 50}) saturate(${1 + intensity / 50})`;
+            break;
+        case 'lighten':
+            filterValue = `brightness(${1 + intensity / 100})`;
+            break;
+        case 'darken':
+            filterValue = `brightness(${1 - intensity / 100})`;
+            break;
+        case 'antique':
+            filterValue = `sepia(${Math.abs(intensity) / 100}) contrast(${1 - intensity / 200})`;
+            break;
+        case 'vintage':
+            filterValue = `sepia(${Math.abs(intensity) / 100}) saturate(${1 - intensity / 200})`;
+            break;
+        case 'highlights':
+            filterValue = `brightness(${1 + intensity / 200}) contrast(${1 + intensity / 100})`;
+            break;
     }
 
     ctx.filter = filterValue;
@@ -94,4 +136,3 @@ function saveImage() {
         document.getElementById('saveBtn').style.display = 'none';
     }
 }
-
